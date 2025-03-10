@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Price;
 use App\Models\Time;
 use Illuminate\Http\Request;
 
@@ -13,13 +14,18 @@ class BookingController extends Controller
      */
     public function index() {}
 
+    public function showPrices()
+    {
+
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         $times = Time::all();
-        return view('user_form.index', compact('times'));
+        $harga = Price::all();
+        return view('user_form.index', compact('times', 'harga'));
     }
 
     public function availableTimes(Request $request)
@@ -62,6 +68,7 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'price_id' => 'required|integer',
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => ['required', 'string', 'regex:/^\+62[0-9]{9,13}$/'],

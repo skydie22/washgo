@@ -83,6 +83,12 @@
                             </a>
                         </li>
 
+                        <li class="sidebar-item  {{ request()->is('admin/price-list') ? 'active' : '' }}">
+                            <a href="{{ url('admin/price-list') }}" class='sidebar-link'>
+                                <i class="bi bi-currency-dollar"></i> <span>Daftar harga</span>
+                            </a>
+                        </li>
+
                         <li class="sidebar-item {{ request()->is('logout*') ? 'active' : '' }} ">
                             <a href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

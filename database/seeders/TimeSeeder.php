@@ -13,7 +13,7 @@ class TimeSeeder extends Seeder
      */
     public function run(): void
     {
-        $times = ['08:00', '09:30', '11:00', '12:30', '14:00', '15:30', '17:00', '18.30', '20.00'];
+        $times = ['08:00', '09:30', '11:00', '12:30', '14:00', '15:30', '17:00', '18:0', '20:00'];
 
         foreach ($times as $time) {
             Time::create(['time' => $time]);

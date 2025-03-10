@@ -13,11 +13,17 @@ class Booking extends Model
         'date',
         'region',
         'time_id',
+        'price_id',
         'address'
     ];
 
     public function time()
     {
         return $this->belongsTo(Time::class , 'time_id');
+    }
+
+    public function price()
+    {
+        return $this->belongsTo(Price::class, 'price_id');
     }
 }

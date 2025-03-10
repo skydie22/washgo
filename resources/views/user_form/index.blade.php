@@ -38,6 +38,16 @@
                         <div class="form-body">
                             <div class="row">
                                 <div class="col-md-4">
+                                    <label for="first-name-horizontal">Pilih Harga</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                   <select name="price_id" id="price" class="form-select">
+                                    @foreach ($harga as $h)
+                                    <option value="{{ $h->id }}">{{ $h->price }}</option>
+                                    @endforeach
+                                   </select>
+                                </div>
+                                <div class="col-md-4">
                                     <label for="first-name-horizontal">Nama</label>
                                 </div>
                                 <div class="col-md-8 form-group">

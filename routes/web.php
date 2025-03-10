@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\BookingController as AdminBookingController;
 use App\Http\Controllers\admin\TimeController as AdminTimeController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\TemplateController;
 use App\Models\Booking;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ Route::post('/booking/add', [BookingController::class, 'store'])->name('booking.
 Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(function() {
     //api booking
     Route::get('/bookings', function() {
-        return response()->json(Booking::with('time')->latest()->get());
+        return response()->json(Booking::with('time' , 'price')->latest()->get());
     });
     // Route::get('/bookings/refresh', [AdminBookingController::class, 'refresh'])->name('booking.refresh');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
@@ -30,6 +31,9 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(functi
     Route::get('/schedule', [AdminTimeController::class, 'index'])->name('time.index');
     Route::post('/schedule/add', [AdminTimeController::class, 'store'])->name('time.store');
     Route::delete('/schedule/delete/{id}', [AdminTimeController::class, 'destroy'])->name('time.destroy');
+    Route::get('/price-list', [PriceController::class, 'index'])->name('price.index');
+    Route::post('/price-list/add', [PriceController::class, 'store'])->name('price.store');
+    Route::delete('/price-list/delete/{id}', [PriceController::class, 'destroy'])->name('price.destroy');
 
 });
 

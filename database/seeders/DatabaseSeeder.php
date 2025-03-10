@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
         $this->call(RoleSeeder::class);
         $this->call(TimeSeeder::class);
+        $this->call(PriceSeeder::class);
 
         $admin = User::factory()->create([
             'name' => 'admin',

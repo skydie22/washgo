@@ -29,6 +29,7 @@
                                 <th>Phone</th>
                                 <th>Tanggal</th>
                                 <th>Wilayah</th>
+                                <th>Harga</th>
                                 <th>Waktu Booking</th>
                                 <th>Alamat Rumah</th>
                                 <th>Aksi</th>
@@ -77,9 +78,10 @@
                                 <td>${booking.phone}</td>
                                 <td>${booking.date}</td>
                                 <td>${booking.region}</td>
+                                <td>${booking.price.price}</td>
                                 <td>${booking.time.time}</td>
                                 <td>${booking.address}</td>
-                                <td><a href="https://wa.me/${booking.phone}/?text=*Konfirmasi Booking WashGo*  %0a Halo *${booking.name}* %0a Terima kasih telah melakukan booking layanan carwash di WashGo. Berikut detail booking Anda:%0a *Tanggal*: ${booking.date}%0a *Jam*: ${booking.time.time}%0a *Wilayah*: ${booking.region}%0a *Alamat*: ${booking.address}%0a Booking Anda telah *dikonfirmasi*! Kami akan datang sesuai jadwal. Jika ada perubahan, silakan hubungi kami.%0a *Kontak*: +6281292675345%0a Terima kasih telah mempercayakan kendaraan Anda kepada kami!%0a Salam, *WashGo*">Hubungi Whatsapp</a></td>
+                                <td><a href="https://wa.me/${booking.phone}/?text=*Konfirmasi Booking WashGo*  %0a Halo *${booking.name}* %0a Terima kasih telah melakukan booking layanan carwash di WashGo. Berikut detail booking Anda:%0a *Tanggal*: ${booking.date}%0a *Jam*: ${booking.time.time}%0a *Harga*: ${booking.price.price}%0a *Wilayah*: ${booking.region}%0a *Alamat*: ${booking.address}%0a Booking Anda telah *dikonfirmasi*! Kami akan datang sesuai jadwal. Jika ada perubahan, silakan hubungi kami.%0a *Kontak*: +6281292675345%0a Terima kasih telah mempercayakan kendaraan Anda kepada kami!%0a Salam, *WashGo*">Hubungi Whatsapp</a></td>
                             </tr>
                         `);
                     });
