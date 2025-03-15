@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('region', ['jakarta pusat', 'jakarta utara', 'jakarta barat', 'jakarta selatan', 'jakarta timur', 'bekasi selatan', 'bekasi barat', 'bekasi timur']);
             $table->foreignId('time_id')->constrained('times')->onDelete('cascade'); // Relasi ke times
             $table->text('address'); // alamat user
+            $table->enum('status', ['pending', 'confirmed', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

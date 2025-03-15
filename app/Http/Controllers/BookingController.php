@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Price;
 use App\Models\Time;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BookingController extends Controller
 {
@@ -113,9 +114,16 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Booking $booking)
+    public function updateStatus(Request $request, Booking $booking, $id)
     {
-        //
+        $request->validate([
+            'status' => ['required', Rule::in(['pending', 'confirmed', 'completed', 'canceled'])]
+        ]);
+
+        $booking = Booking::findOrFail($id);
+        $booking->update(['status' => $request->status]);
+
+        return response()->json(['message' => 'Status berhasil diperbarui!']);
     }
 
     /**

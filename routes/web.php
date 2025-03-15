@@ -25,6 +25,7 @@ Route::prefix('admin')->name('admin.')->middleware(['role:admin'])->group(functi
     Route::get('/bookings', function() {
         return response()->json(Booking::with('time' , 'price')->latest()->get());
     });
+    Route::put('/bookings/{id}/update-status', [BookingController::class, 'updateStatus']);
     // Route::get('/bookings/refresh', [AdminBookingController::class, 'refresh'])->name('booking.refresh');
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
     Route::get('/booking-order', [AdminBookingController::class, 'index'])->name('booking.order.get');

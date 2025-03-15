@@ -14,7 +14,8 @@ class Booking extends Model
         'region',
         'time_id',
         'price_id',
-        'address'
+        'address',
+        'status'
     ];
 
     public function time()
