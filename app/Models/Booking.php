@@ -27,4 +27,9 @@ class Booking extends Model
     {
         return $this->belongsTo(Price::class, 'price_id');
     }
+
+    public static function getRegions()
+    {
+        return ['jakarta pusat', 'jakarta utara', 'jakarta barat', 'jakarta selatan', 'jakarta timur', 'bekasi selatan', 'bekasi barat', 'bekasi timur'];
+    }
 }

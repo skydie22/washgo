@@ -23,11 +23,12 @@
 
         <div class="card card mt-3">
             @if (session('success'))
-            <div class="alert alert-light-success color-success alert-dismissible fade show"><i class="bi bi-check-circle"></i>
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+                <div class="alert alert-light-success color-success alert-dismissible fade show"><i
+                        class="bi bi-check-circle"></i>
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="card-header">
                 <h4 class="card-title">Form Booking</h4>
             </div>
@@ -41,11 +42,11 @@
                                     <label for="first-name-horizontal">Pilih Harga</label>
                                 </div>
                                 <div class="col-md-8 form-group">
-                                   <select name="price_id" id="price" class="form-select">
-                                    @foreach ($harga as $h)
-                                    <option value="{{ $h->id }}">{{ $h->price }}</option>
-                                    @endforeach
-                                   </select>
+                                    <select name="price_id" id="price" class="form-select">
+                                        @foreach ($harga as $h)
+                                            <option value="{{ $h->id }}">{{ $h->price }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="first-name-horizontal">Nama</label>
@@ -65,24 +66,19 @@
                                     <label for="contact-info-horizontal">No Hp</label>
                                 </div>
                                 <div class="col-md-8 form-group">
-                                    <input type="text" id="phoneId" class="form-control"
-                                        name="phone" placeholder="No Hp"  required>
+                                    <input type="text" id="phoneId" class="form-control" name="phone"
+                                        placeholder="No Hp" required>
                                 </div>
 
                                 <div class="col-md-4 form-group">
                                     <label for="region-horizontal">Wilayah</label>
                                 </div>
                                 <div class="col-md-8 form-group">
-                                    <select name="region" class="form-select" id="basicSelect" required>
-                                        <option value="">Pilih Wilayah</option>
-                                        <option value="jakarta pusat">Jakarta Pusat</option>
-                                        <option value="jakarta utara">Jakarta Utara</option>
-                                        <option value="jakarta barat">Jakarta Barat</option>
-                                        <option value="jakarta selatan">Jakarta Selatan</option>
-                                        <option value="jakarta timur">Jakarta Timur</option>
-                                        <option value="bekasi selatan">Bekasi Selatan</option>
-                                        <option value="bekasi barat">Bekasi Barat</option>
-                                        <option value="bekasi timur">Bekasi Timur</option>
+                                    <select name="region" class="form-select" id="region" required>
+                                        <option>Pilih Wilayah</option>
+                                        @foreach (\App\Models\Booking::getRegions() as $region)
+                                            <option value="{{ $region }}">{{ $region }}</option>
+                                        @endforeach
 
                                     </select>
                                 </div>
@@ -91,7 +87,8 @@
                                     <label for="date-horizontal">Tanggal Booking</label>
                                 </div>
                                 <div class="col-md-8 form-group">
-                                    <input class="form-control" type="date" name="date" id="dateInput" required min="{{ now()->addDay()->toDateString() }}">
+                                    <input class="form-control" type="date" name="date" id="dateInput" required
+                                        min="{{ now()->addDay()->toDateString() }}">
                                 </div>
 
                                 <div class="col-md-4 form-group">
@@ -124,12 +121,12 @@
         </div>
     </div>
 
-    <script>
-        document.getElementById('dateInput').addEventListener('change', function () {
+    {{-- <script>
+        document.getElementById('dateInput', 'region').addEventListener('change', function() {
             let selectedDate = this.value;
             let timeSelect = document.getElementById('timeSelect');
 
-            fetch(`/available-times?date=${selectedDate}`)
+            fetch(`/booking/available-times?date=${selectedDate}`)
                 .then(response => response.json())
                 .then(data => {
                     timeSelect.innerHTML = '<option value="">Pilih Jam</option>';
@@ -141,10 +138,63 @@
                     });
                 });
         });
-    </script>
+    </script> --}}
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('dateInput').addEventListener('change', fetchAvailableTimes);
+        document.getElementById('region').addEventListener('change', fetchAvailableTimes);
+
+        function fetchAvailableTimes() {
+            let selectedDate = document.getElementById('dateInput').value;
+            let selectedRegion = document.getElementById('region').value;
+            let timeSelect = document.getElementById('timeSelect');
+
+            // Pastikan kedua input telah dipilih sebelum mengirim request
+            if (selectedDate && selectedRegion) {
+                fetch(`/booking/available-times?date=${selectedDate}&region=${selectedRegion}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        timeSelect.innerHTML = '<option value="">Pilih Jam</option>';
+                        data.forEach(time => {
+                            let option = document.createElement('option');
+                            option.value = time.id;
+                            option.textContent = time.time;
+                            timeSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching available times:', error));
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    {{-- <script type="module">
+        $(document).ready(function() {
+            $("#dateInput", "#region").on("change", function () {
+                var date = $("#dateInput").val();
+                var region = $("#region").val();
+
+                if (date && region) {
+                    $.ajax({
+                        url: "/available-times",
+                        method: "GET",
+                        data: { date: date, region: region },
+                        success: function (response) {
+                            $("#timeSelect").html('<option value="">Pilih Jam</option>');
+
+                            response.forEach(function (time) {
+                                $("#timeSelect").append(`<option value="${time.id}">${time.time}</option>`);
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script> --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
             let phoneInput = document.getElementById("phoneId");
 
             // Tambahkan +62 jika belum ada
@@ -153,20 +203,20 @@
             }
 
             // Mencegah user menghapus +62
-            phoneInput.addEventListener("input", function () {
+            phoneInput.addEventListener("input", function() {
                 if (!this.value.startsWith("+62")) {
                     this.value = "+62";
                 }
             });
 
             // Mencegah copy-paste tanpa +62
-            phoneInput.addEventListener("paste", function (event) {
+            phoneInput.addEventListener("paste", function(event) {
                 event.preventDefault();
                 let pasteData = (event.clipboardData || window.clipboardData).getData("text");
                 this.value = "+62" + pasteData.replace(/^(\+62|0)/, '');
             });
         });
-        </script>
+    </script>
 
 
     <script src="{{ asset('/assets/compiled/js/app.js') }}"></script>

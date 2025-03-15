@@ -15,10 +15,7 @@ class BookingController extends Controller
      */
     public function index() {}
 
-    public function showPrices()
-    {
-
-    }
+    public function showPrices() {}
     /**
      * Show the form for creating a new resource.
      */
@@ -32,17 +29,20 @@ class BookingController extends Controller
     public function availableTimes(Request $request)
     {
         $date = $request->query('date');
+        $region = $request->query('region');
 
         if (!$date) {
             return response()->json([]);
         }
 
         // Ambil semua jam yang belum dibooking pada tanggal yang dipilih
-        $bookedTimes = Booking::where('date', $date)->pluck('time_id');
+        $bookedTimes = Booking::where('date', $date)->where('region', $region)->pluck('time_id');
         $availableTimes = Time::whereNotIn('id', $bookedTimes)->get();
 
         return response()->json($availableTimes);
     }
+
+
 
     // public function refresh()
     // {

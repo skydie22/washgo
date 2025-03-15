@@ -11,7 +11,21 @@
         <div class="row gy-5" style="justify-content: center">
             <div class="content ">
                 <h3 class="booking-policy">Aturan Pemesanan WashGo</h3>
-                <p>Wajib Menggunakan Nomor Whatsapp Untuk Booking</p>
+                <ul style="text-align: left">
+                    <li>Wajib Menggunakan Nomor Whatsapp Untuk Booking</li>
+                    <li>Pemesanan harus dilakukan minimal 24 jam sebelum waktu layanan yang diinginkan.</li>
+                    <li>Harap berikan alamat lengkap dan jelas agar tim kami dapat menemukan lokasi Anda dengan muda</li>
+                    <li>Setelah pemesanan dilakukan, tim kami akan mengonfirmasi ketersediaan jadwal secepatny</li>
+                    <li>Pastikan kendaraan dalam kondisi aman dan bebas dari barang berharga yang dapat mengganggu proses
+                        pencucian.</li>
+                    <li>Jika ingin membatalkan atau mengubah jadwal, harap beri tahu kami minimal 12 jam sebelumnya.</li>
+                    <li>Pelanggan wajib menyediakan akses ke keran air yang siap digunakan.</li>
+                    <li>Setelah jadwal dikonfirmasi, pelanggan diwajibkan membayar uang muka (DP) sebesar 50% sesuai
+                        pricelist yang tertera.</li>
+                    <li>Harga layanan belum termasuk biaya transportasi. Biaya ongkir dikenakan sebesar Rp20.000 -
+                        Rp40.000, tergantung jarak lokasi pelanggan.</li>
+                </ul>
+                {{-- <p>Wajib Menggunakan Nomor Whatsapp Untuk Booking</p>
 
                 <p>1. Pemesanan harus dilakukan minimal 24 jam sebelum waktu layanan yang diinginkan.</p>
 
@@ -30,7 +44,7 @@
                     pricelist yang tertera.</p>
 
                 <p>8. Harga layanan belum termasuk biaya transportasi. Biaya ongkir dikenakan sebesar Rp20.000 -
-                    Rp40.000, tergantung jarak lokasi pelanggan.</p>
+                    Rp40.000, tergantung jarak lokasi pelanggan.</p> --}}
             </div>
             <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
                 <div class="service-item">
