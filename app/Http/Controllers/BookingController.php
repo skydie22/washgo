@@ -80,6 +80,7 @@ class BookingController extends Controller
                 'exists:times,id',
                 function ($attribute, $value, $fail) use ($request) {
                     $isBooked = Booking::where('date', $request->date)
+                        ->where('region', $request->region)
                         ->where('time_id', $value)
                         ->exists();
                     if ($isBooked) {
