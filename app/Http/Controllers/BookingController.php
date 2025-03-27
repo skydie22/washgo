@@ -6,6 +6,7 @@ use App\Models\Booking;
 use App\Models\Price;
 use App\Models\Time;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class BookingController extends Controller
@@ -75,25 +76,27 @@ class BookingController extends Controller
             'phone' => ['required', 'string', 'regex:/^\+62[0-9]{9,13}$/'],
             'date' => 'required|date',
             'region' => 'required|in:jakarta pusat,jakarta utara,jakarta barat,jakarta selatan,jakarta timur,bekasi selatan,bekasi barat,bekasi timur',
-            'time_id' => [
-                'required',
-                'exists:times,id',
-                function ($attribute, $value, $fail) use ($request) {
-                    $isBooked = Booking::where('date', $request->date)
-                        ->where('region', $request->region)
-                        ->where('time_id', $value)
-                        ->exists();
-                    if ($isBooked) {
-                        $fail('Jam ini sudah dibooking, silakan pilih jam lain.');
-                    }
-                }
-            ],
+            'time_id' => 'required| exists:times,id',
             'address' => 'required|string',
         ]);
 
-        $bookings = Booking::create($validatedData);
+        return DB::transaction(function () use ($validatedData, $request) {
+            // Lock untuk memastikan tidak ada race condition
+            $isBooked = Booking::where('date', $request->date)
+                ->where('region', $request->region)
+                ->where('time_id', $request->time_id)
+                ->lockForUpdate()
+                ->exists();
 
-        return redirect()->route('user.form')->with('success', 'Booking berhasil, silahkan menunggu pesan whatsapp untuk konfirmasi');
+            if ($isBooked) {
+                return redirect()->route('user.form')->withErrors(['time_id' => 'Jam ini sudah dibooking, silakan pilih jam lain.']);
+            }
+
+            Booking::create($validatedData);
+
+            return redirect()->route('user.form')->with('success', 'Booking berhasil, silahkan menunggu pesan WhatsApp untuk konfirmasi');
+        });
+
     }
 
     /**

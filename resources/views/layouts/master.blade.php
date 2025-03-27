@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wash Go</title>
+    <title>WashGo</title>
     <link rel="icon" href="{{ asset('/assets/static/images/logo/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('/assets/extensions/simple-datatables/style.css') }}">
     <link rel="stylesheet" crossorigin href="{{ asset('/assets/compiled/css/table-datatable.css') }}">
